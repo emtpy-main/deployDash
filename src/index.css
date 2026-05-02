@@ -1,0 +1,55 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@theme {
+  --color-primary: #FF6B00;
+  --color-secondary: #FFB800;
+  --color-bg-base: var(--bg-color);
+  --color-surface: var(--surface-color);
+  --color-text-base: var(--text-color);
+  --color-text-muted: var(--text-muted);
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+}
+
+@layer base {
+  :root {
+    --bg-color: #F9F9F9;
+    --surface-color: #FFFFFF;
+    --text-color: #121212;
+    --text-muted: #52525B;
+  }
+
+  :root.dark {
+    --bg-color: #0D0D0D;
+    --surface-color: #1A1A1A;
+    --text-color: #FFFFFF;
+    --text-muted: #A1A1AA;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    @apply font-sans antialiased;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(26, 26, 26, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .dark .glass {
+    background: rgba(26, 26, 26, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .light .glass, :root:not(.dark) .glass {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+}
