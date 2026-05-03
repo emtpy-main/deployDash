@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from '
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import axios from 'axios';
+import { BASE_URL } from '../config';
 
 export const Register = () => {
   const [name, setName] = useState('');
@@ -51,7 +52,7 @@ export const Register = () => {
       const token = await userCredential.user.getIdToken();
       
       // Verify/Register with backend
-      await axios.post('http://localhost:5000/api/auth/verify-token', {}, {
+      await axios.post(`${BASE_URL}/api/auth/verify-token`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }

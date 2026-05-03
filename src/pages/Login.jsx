@@ -6,7 +6,7 @@ import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import axios from 'axios';
-
+import { BASE_URL } from '../config';
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,9 +20,9 @@ export const Login = () => {
     setError('');
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      
+
       const token = await userCredential.user.getIdToken();
-      
+
       await axios.post(`${BASE_URL}/api/auth/verify-token`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -42,10 +42,10 @@ export const Login = () => {
     setError('');
     try {
       const userCredential = await signInWithPopup(auth, googleProvider);
-      
+
       const token = await userCredential.user.getIdToken();
-      
-      await axios.post('http://localhost:5000/api/auth/verify-token', {}, {
+
+      await axios.post(`${BASE_URL}/api/auth/verify-token`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }

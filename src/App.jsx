@@ -11,7 +11,6 @@ import { Footer } from './components/Footer';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { PublicRoute } from './components/PublicRoute';
 
-export const BASE_URL = import.meta.env.VITE_API_URL;
 
 function AppContent() {
   return (

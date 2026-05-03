@@ -5,7 +5,8 @@ import { LiveDashboard } from '../components/dashboard/LiveDashboard';
 import { Button } from '../components/ui/Button';
 import { motion } from 'framer-motion';
 import axios from 'axios';
-import BASE_URL from '../App'
+import { BASE_URL } from '../config';
+
 export const Home = () => {
   const { currentUser } = useAuth();
 
@@ -30,7 +31,6 @@ export const Home = () => {
   const [jobId, setJobId] = useState(null);
 
   useEffect(() => {
-    // Generate random blobs on mount for dynamic background
     const newBlobs = Array.from({ length: 6 }).map((_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -47,7 +47,7 @@ export const Home = () => {
     setIsSubmitting(true);
     setSubmitError('');
     try {
-      const response = await axios.post(`http://localhost:5000/run`, {
+      const response = await axios.post(`${BASE_URL}/run`, {
         goal: formData.projectGoals + " " + formData.projectDetails,
         dockerUsername: formData.dockerUsername,
         dockerPassword: formData.dockerPassword,
@@ -177,10 +177,10 @@ export const Home = () => {
         )}
 
         {view === 'dashboard' && (
-          <LiveDashboard 
-            jobId={jobId} 
-            formData={formData} 
-            onRetry={handleRetry} 
+          <LiveDashboard
+            jobId={jobId}
+            formData={formData}
+            onRetry={handleRetry}
             onGoHome={handleGoHome}
           />
         )}
