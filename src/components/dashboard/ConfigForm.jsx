@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ChevronLeft, Rocket, Server, GitBranch, Container, Settings } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Rocket, Server, GitBranch, Container, Settings, ExternalLink, Info } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 export const ConfigForm = ({ formData, setFormData, step, setStep, onSubmit, isSubmitting, submitError }) => {
@@ -42,7 +42,7 @@ export const ConfigForm = ({ formData, setFormData, step, setStep, onSubmit, isS
   return (
     <motion.div
       layoutId="dashboard-container"
-      className="w-full max-w-2xl mx-auto rounded-2xl p-8 border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] bg-white/5 backdrop-blur-3xl relative overflow-hidden"
+      className="w-full max-w-2xl mx-auto rounded-xl p-8 border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] bg-white/5 backdrop-blur-3xl relative overflow-hidden"
     >
       {/* Optional reflection highlight for glass */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
@@ -124,7 +124,17 @@ export const ConfigForm = ({ formData, setFormData, step, setStep, onSubmit, isS
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-text-muted ml-1">Docker Password <span className="text-red-500">*</span></label>
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-medium text-text-muted ml-1">Docker Password <span className="text-red-500">*</span></label>
+                    <a 
+                      href="https://hub.docker.com/settings/security" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-[10px] text-primary hover:underline flex items-center gap-1"
+                    >
+                      Generate Access Token <ExternalLink size={10} />
+                    </a>
+                  </div>
                   <input
                     type="password"
                     value={formData.dockerPassword}
@@ -132,6 +142,9 @@ export const ConfigForm = ({ formData, setFormData, step, setStep, onSubmit, isS
                     className="w-full bg-black/20 border border-white/5 rounded-xl py-3 px-4 focus:outline-none focus:border-primary/50 transition-colors"
                     placeholder="••••••••"
                   />
+                  <p className="text-[10px] text-text-muted ml-1 italic opacity-60">
+                    Use a Personal Access Token (PAT) for better security.
+                  </p>
                 </div>
               </div>
             )}
@@ -164,7 +177,17 @@ export const ConfigForm = ({ formData, setFormData, step, setStep, onSubmit, isS
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-text-muted ml-1">GitHub Token ID <span className="text-red-500">*</span></label>
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-medium text-text-muted ml-1">GitHub Token ID <span className="text-red-500">*</span></label>
+                    <a 
+                      href="https://github.com/settings/tokens" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-[10px] text-primary hover:underline flex items-center gap-1"
+                    >
+                      Generate Classic PAT <ExternalLink size={10} />
+                    </a>
+                  </div>
                   <input
                     type="password"
                     value={formData.githubToken}
@@ -172,6 +195,11 @@ export const ConfigForm = ({ formData, setFormData, step, setStep, onSubmit, isS
                     className="w-full bg-black/20 border border-white/5 rounded-xl py-3 px-4 focus:outline-none focus:border-primary/50 transition-colors"
                     placeholder="ghp_••••••••••••••••"
                   />
+                  <div className="bg-primary/5 border border-primary/10 rounded-lg p-2 mt-2">
+                    <p className="text-[10px] text-text-muted leading-relaxed">
+                      <span className="text-primary font-bold">Guide:</span> Go to Developer Settings → PATs → <span className="text-white/80">Classic</span> → Generate → Check <span className="text-white/80">"repo"</span> box.
+                    </p>
+                  </div>
                 </div>
               </div>
             )}
@@ -187,6 +215,12 @@ export const ConfigForm = ({ formData, setFormData, step, setStep, onSubmit, isS
                     className="w-full bg-black/20 border border-white/5 rounded-xl py-3 px-4 focus:outline-none focus:border-primary/50 transition-colors"
                     placeholder="https://api.render.com/deploy/..."
                   />
+                  <div className="flex items-start gap-2 bg-yellow-500/5 border border-yellow-500/10 rounded-lg p-2 mt-2">
+                    <Info size={12} className="text-yellow-500 mt-0.5 shrink-0" />
+                    <p className="text-[10px] text-text-muted leading-relaxed italic">
+                      <span className="text-yellow-500 font-bold">Tip:</span> Create a "Static Site" or "Web Service" on Render to generate this hook for auto-deployment.
+                    </p>
+                  </div>
                 </div>
               </div>
             )}

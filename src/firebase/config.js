@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { initializeFirestore } from "firebase/firestore";
 
 // Replace these with your actual Firebase project configuration
 const firebaseConfig = {
@@ -14,6 +15,12 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
+// Force long-polling to avoid CORS/Listen channel issues in some environments
+const db = initializeFirestore(app, {
+  experimentalForceLongPolling: true,
+});
+
 const googleProvider = new GoogleAuthProvider();
 
-export { auth, googleProvider };
+export { auth, db, googleProvider };

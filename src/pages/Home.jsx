@@ -27,6 +27,7 @@ export const Home = () => {
   const [blobs, setBlobs] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [jobId, setJobId] = useState(null);
 
   useEffect(() => {
     // Generate random blobs on mount for dynamic background
@@ -56,6 +57,7 @@ export const Home = () => {
         imageName: formData.imageName
       });
       if (response.data.status === 'queued') {
+        setJobId(response.data.jobId);
         setView('dashboard');
       } else {
         setSubmitError("Failed to validate configuration.");
@@ -66,6 +68,29 @@ export const Home = () => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleRetry = () => {
+    setJobId(null);
+    setSubmitError('');
+    setView('form');
+  };
+
+  const handleGoHome = () => {
+    setJobId(null);
+    setSubmitError('');
+    setView('hero');
+    setStep(1);
+    setFormData({
+      projectGoals: '',
+      projectDetails: '',
+      dockerUsername: '',
+      githubRepo: '',
+      dockerPassword: '',
+      imageName: '',
+      githubToken: '',
+      hookUrl: ''
+    });
   };
 
   return (
@@ -152,7 +177,12 @@ export const Home = () => {
         )}
 
         {view === 'dashboard' && (
-          <LiveDashboard formData={formData} />
+          <LiveDashboard 
+            jobId={jobId} 
+            formData={formData} 
+            onRetry={handleRetry} 
+            onGoHome={handleGoHome}
+          />
         )}
       </div>
     </div>
